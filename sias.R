@@ -12,12 +12,12 @@ scoring_sias <- function(d) {
   d <- d %>% 
     mutate_at(
       all_of(columns_to_recode), 
-      ~case_match(., 
-        1 ~ 5, 
-        2 ~ 4, 
-        3 ~ 3,
-        4 ~ 2,
-        5 ~ 1
+      ~case_when(
+        . == 1 ~ 5, 
+        . == 2 ~ 4, 
+        . == 3 ~ 3,
+        . == 4 ~ 2,
+        . == 5 ~ 1
       )
     )
   
