@@ -1,13 +1,14 @@
 
-
-#' @description 
 #' Scoring DASS-21
-#' @input
-#' Dataframe with one column with subj_code and 21 numeric columns
-#' each in the range 0-3.
-#' @returns 
-#' Dataframe with subj_code, all the item columns, and the depression,
-#' anxiety, and stress scales.
+#'
+#' The \code{quest/scoring} module perform the scoring of the DASS-21.
+'.__module__.'
+
+#' Gets as input the raw items and returns the raw items and the three DASS-21 
+#' scales.
+#' @param scoring a data.frame or \code{seq} object
+#' @name scoring
+#' @export
 scoring_dass_21 <- function(d) {
   
   # Convert factors to character
