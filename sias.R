@@ -11,7 +11,7 @@ scoring_sias <- function(d) {
   
   d <- d %>% 
     mutate_at(
-      vars(columns_to_recode), 
+      all_of(columns_to_recode), 
       ~case_match(., 
         1 ~ 5, 
         2 ~ 4, 
