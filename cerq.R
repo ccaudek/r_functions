@@ -20,7 +20,7 @@
 # Rumination
 # Self-blame
 # Catastrophizing
-# Other-blame
+# Other-blame 
 scoring_cerq <- function(d) {
   
   # d <- rio::import(here::here("data", "prep", "quest_scales", "cerq_items.csv"))
