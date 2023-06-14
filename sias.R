@@ -6,6 +6,9 @@
 #' items of the SIAS. The items must be named `sias_1`, ... `sias_19`.
 scoring_sias <- function(d) {
   
+  if (length(unique(d[, 1])) < 10) 
+    stop("Error: the first column is not user_id!")
+  
   # Reverse items 8 and 10.
   columns_to_recode <- c("sias_8", "sias_10")
   
@@ -31,5 +34,5 @@ scoring_sias <- function(d) {
   sias_scale <- d |> 
     dplyr::select(user_id, sias_score)
   
-  sias_scale
+  return(sias_scale)
 }

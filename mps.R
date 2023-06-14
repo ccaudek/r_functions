@@ -51,6 +51,6 @@ scoring_mps <- function(d) {
   mps_subscales <- d |> 
     dplyr::select(user_id, mps_cmd, mps_ps, mps_pepc, mps_or, mps_tot)
   
-  mps_subscales
+  return(mps_subscales)
 }
 

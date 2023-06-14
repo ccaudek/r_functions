@@ -9,6 +9,10 @@ scoring_ius12 <- function(d) {
   
   # d <- rio::import(here("data", "prep", "quest_scales", "ius12_items.csv"))
   
+  if (length(unique(d[, 1])) < 10) {
+    stop("Error: the first column is not user_id!")
+  }
+  
   # Prospective IU items.
   prospective_iu <- d %>% 
     dplyr::select(
@@ -37,5 +41,5 @@ scoring_ius12 <- function(d) {
   ius_scale <- d |> 
     dplyr::select(user_id, inhibitory_iu, prospective_iu, ius_tot)
   
-  ius_scale
+  return(ius_scale)
 }

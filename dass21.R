@@ -1,9 +1,8 @@
 #' Scoring DASS-21
 #'
-#' The \code{quest/scoring} module perform the scoring of the DASS-21.
+#' The \code{scoring_dass21} function performs the scoring of the DASS-21 scale.
 #' 
-#' Gets as input the raw items and returns the raw items and the three DASS-21 
-#' scales.
+#' Gets as input the raw items and returns the three DASS-21 sub-scales.
 #' @param scoring a data.frame or \code{seq} object
 #' @name scoring
 #' @export
