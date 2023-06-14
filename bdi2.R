@@ -7,6 +7,9 @@ scoring_bdi2 <- function(d) {
   
   # d <- rio::import(here("data", "prep", "quest_scales", "bdi2_items.csv"))
   
+  if (length(unique(d[, 1])) < 10) 
+    stop("Error: the first column is not user_id!")
+  
   # BDI-2 items.
   bdi2_items <- d %>% 
     dplyr::select(-user_id)

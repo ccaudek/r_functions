@@ -7,6 +7,9 @@ scoring_bsq14 <- function(d) {
   
   # d <- rio::import(here("data", "prep", "quest_scales", "bsq14_items.csv"))
   
+  if (length(unique(d[, 1])) < 10) 
+    stop("Error: the first column is not user_id!")
+  
   # BSQ-14 items.
   bsq14_items <- d %>% 
     dplyr::select(-user_id)
