@@ -54,10 +54,10 @@ scoring_cerq <- function(d) {
   
   cerq_subscales$user_id <- d$user_id
   
-  rio::export(
-    cerq_subscales, 
-    here::here("data", "prep", "quest_scales", "cerq_scores.csv")
-  )
+  cerq_subscales <- cerq_subscales %>% 
+    relocate(user_id)
+  
+  return(cerq_subscales)
 }
   
 # eof ----
