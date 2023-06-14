@@ -58,43 +58,9 @@ scoring_cerq <- function(d) {
     cerq_subscales, 
     here::here("data", "prep", "quest_scales", "cerq_scores.csv")
   )
+}
   
 # eof ----
   
-  
-  
-  
-  
-  
-  # DASS-21: Stress subscale
-  d$dass21_stress <- d %>% 
-    dplyr::select(
-      c("dass21_1", "dass21_6", "dass21_8", "dass21_11", "dass21_12", 
-        "dass21_14", "dass21_18")
-    ) |> 
-    rowSums()
-  
-  # DASS-21: Anxiety subscale
-  d$dass21_anxiety <- d %>% 
-    dplyr::select(
-      c("dass21_2", "dass21_4", "dass21_7", "dass21_9", "dass21_15", 
-        "dass21_19", "dass21_20")
-    ) |> 
-    rowSums()
-  
-  # DASS-21: Depression subscale
-  d$dass21_depression <- d %>% 
-    dplyr::select(
-      c("dass21_3", "dass21_5", "dass21_10", "dass21_13", "dass21_16", 
-        "dass21_17", "dass21_21")
-    ) |> 
-    rowSums()
-  
-  # DASS-21 subscales and subject code
-  dass21_scales <- d |> 
-    dplyr::select(user_id, dass21_stress, dass21_anxiety, dass21_depression)
-  
-  return(dass21_scales)
-}
 
 
