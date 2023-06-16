@@ -26,8 +26,6 @@
 #' @examples
 #' \code{dat <- scoring_cope(d)}
 #' 
-
-#'
 scoring_fmps <- function(d) {
   suppressPackageStartupMessages({
     library("tidyverse")

@@ -36,6 +36,7 @@ scoring_cope <- function(d) {
     stop("Error: the first column must be user_id!")
   }
 
+  # debugging for the groundhog_day project
   # d <- rio::import(here::here("data", "prep", "quest_scales", "cope_items.csv"))
 
   # Social support
