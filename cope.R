@@ -1,12 +1,39 @@
-#' \code{scoring_cope()} generates the subscales of the COPE.
-#' @param data.frame.
-#' @return data.frame.
-#' The first column has the subjects' ids; the following columns are the 60
-#' items of the SIAS. The items must be named `cope_1`, ... `cope_60`.
+#' \code{scoring_cope(d)} generates the subscales of COPE Inventory.
+#'
+#' The COPE Inventory was developed to assess a broad range of coping
+#' responses, several of which had an explicit basis in theory.
+#' The inventory includes some responses that are expected to be
+#' dysfunctional, as well as some that are expected to be functional.
+#' It also includes at least 2 pairs of polar-opposite tendencies.
+#' These were included because each scale is unipolar (the absence of
+#' this response does not imply the presence of its opposite), and
+#' because people engage in a wide range of coping during a given
+#' period, including both of each pair of opposites.
+#'
+#' \url{https://local.psy.miami.edu/people/faculty/ccarver/availbale-self-report-instruments/cope/}
+#'
+#' @param d A DataFrame
+#' @details The input DataFrame should have the following structure:
+#' - The first column should be `user_id`, representing the
+#'   user identifier.
+#' - The next 60 columns should contain the items of the COPE
+#'   Inventory in a numeric format. Each item should be named
+#'   `cope_1`, `cope_2`, ..., `cope_60`.
+#' @returns A DataFrame with user_id user_id as the first
+#' column, followed by the subscales of the COPE Inventory.
+#' @export
+#' @examples
+#' \code{dat <- scoring_cope(d)}
+#'
 scoring_cope <- function(d) {
-  
+
+  suppressPackageStartupMessages({
+    library("tidyverse")
+    library("rio")
+  })
+
   if (length(unique(d[, 1])) < 10) {
-    stop("Error: the first column is not user_id!")
+    stop("Error: the first column must be user_id!")
   }
 
   # d <- rio::import(here::here("data", "prep", "quest_scales", "cope_items.csv"))
@@ -46,6 +73,7 @@ scoring_cope <- function(d) {
     abs(d$cope_50 - 5) + d$cope_7 +
     d$cope_18 + d$cope_48 + d$cope_60)
 
+  # user_id and COPE subscales
   cope_scales <- data.frame(
     user_id = d$user_id,
     social_support = d$social_support,
