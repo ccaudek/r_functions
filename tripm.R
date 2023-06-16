@@ -1,12 +1,9 @@
-#' \code{scoring_tripm()} generates the total score of the Tri-PM Scale
-#' @param data.frame.
-#' @return data.frame.
-#' The first column has the subjects' ids; the following columns are the 58
-#' items of the Tri-PM The items must be named `tripm_1`, ... `tripm_58`.
-#' # Step 1: Coding Responses
+#' \code{scoring_tripm()} generates the subscales of the Tri-PM Scale.
 #'
-#' For items followed by [F]-i.e., items 2, 4, 10, 11, 16, 21, 25, 30, 33, 35,
-#' 39, 41, 44, 47, 50, 52, 57 - code responses as follows: True = 0; Somewhat
+#' Step 1: Coding Responses
+#'
+#' For items followed by [F]- i.e., items 2, 4, 10, 11, 16, 21, 25, 30, 33, 35,
+#' 39, 41, 44, 47, 50, 52, 57 - Sum coded responses as follows: True = 0; Somewhat
 #' true = 1; Somewhat false = 2; False = 3.
 #'
 #' Code responses for all other items as follows: True = 3; Somewhat true = 2;
@@ -14,26 +11,46 @@
 #'
 #' Step 2: Computing Scale Scores and Total Scores
 #'
-#' Boldness subscale (19 items)-Sum coded responses for the following items:
+#' Boldness subscale (19 items) - Sum coded responses for the following items:
 #'   1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 32, 35, 38, 41, 44, 47, 50, 54, 57
 #'
-#' Meanness subscale (19 items)-Sum coded responses for the following items:
+#' Meanness subscale (19 items) - Sum coded responses for the following items:
 #'   2, 6, 8, 11, 14, 17, 20, 23, 26, 29, 33, 36, 39, 40, 42, 45, 48, 52, 55
 #'
-#' Disinhibition subscale (20 items)-Sum coded responses for the following items:
+#' Disinhibition subscale (20 items)- Sum coded responses for the following items:
 #'   3, 5, 9, 12, 15, 18, 21, 24, 27, 30, 31, 34, 37, 43, 46, 49, 51, 53, 56, 58
 #'
 #' Total Psychopathy score-Sum scores across the three subscales.
-#'
-#' In the input dataframe, the jugments are scored as follows:
+#' 
+#' The jugments are scored as follows:
 #' True = 3; Somewhat true = 2; Somewhat false = 1; False = 0.
-
+#' 
+#' @param d A DataFrame
+#' @details The input DataFrame should have the following structure:
+#' - The first column should be `user_id`, representing the
+#'   user identifier.
+#' - The next 58 columns should contain the items of the COPE
+#'   Inventory in a numeric format. Each item should be named
+#'   `tripm_1`, `tripm_2`, ..., `tripm_58`.
+#' @returns A DataFrame with user_id user_id as the first
+#' column, followed by the subscales of the Tri-PM Scale.
+#' @export
+#' @examples
+#' \code{dat <- scoring_tripm(d)}
+#'
 scoring_tripm <- function(d) {
-  # d <- rio::import(here("data", "prep", "quest_scales", "tripm_items.csv"))
+
+  suppressPackageStartupMessages({
+    library("tidyverse")
+    library("rio")
+  })
 
   if (length(unique(d[, 1])) < 10) {
     stop("Error: the first column is not user_id!")
   }
+
+  # Debugging for the groundhog_day project.
+  # d <- rio::import(here("data", "prep", "quest_scales", "tripm_items.csv"))
 
   # Boldness items.
   dat_b <- d %>%
@@ -50,9 +67,6 @@ scoring_tripm <- function(d) {
   keys_b <- c(rep(1, 9), rep(-1, 10))
   clean_b <- psych::reverse.code(keys_b, dat_b, mini = 0, maxi = 3)
   d$boldness <- rowSums(clean_b)
-  # hist(d$boldness)
-  # psych::alpha(clean_b)
-  # mean(d$boldness)
 
   # Meanness subscale
   dat_m <- d %>%
@@ -68,8 +82,6 @@ scoring_tripm <- function(d) {
   keys_m <- c(rep(1, 14), rep(-1, 5))
   clean_m <- psych::reverse.code(keys_m, dat_m, mini = 0, maxi = 3)
   d$meanness <- rowSums(clean_m)
-  # hist(d$meanness)
-  # mean(d$meanness)
 
   # TRIPM: Disinhibition subscale
   dat_d <- d %>%
@@ -85,10 +97,8 @@ scoring_tripm <- function(d) {
   keys_d <- c(rep(1, 18), rep(-1, 2))
   clean_d <- psych::reverse.code(keys_d, dat_d, mini = 0, maxi = 3)
   d$disinhibition <- rowSums(clean_d)
-  # hist(d$disinhibition)
-  # mean(d$disinhibition)
 
-  # TRIPM subscales and subject code
+  # user_id and boldness, disinhibition, meanness.
   tripm_scale <- d |>
     dplyr::select(user_id, boldness, disinhibition, meanness)
 

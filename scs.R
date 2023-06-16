@@ -1,39 +1,57 @@
-#' \code{scoring_scs()} generates the total score of the Self-Compassion Scale
-#' @param data.frame.
-#' @return data.frame.
-#' The first column has the subjects' ids; the following columns are the 26
-#' items of the SCS. The items must be named `scs_1`, ... `scs_26`.
+#' \code{scoring_scs()} generates the total score of the 
+#' Self-Compassion Scale and the not-reversed scores of the 
+#' six subscales (sk, ch, mi, sj, is, oi).
+#'
+#' @param d A DataFrame
+#' @details The input DataFrame should have the following structure:
+#' - The first column should be `user_id`, representing the
+#'   user identifier.
+#' - The next 26 columns should contain the items of the SCS
+#'   in a numeric format. Each item should be named
+#'   `scs_1`, `scs_2`, ..., `scs_26`.
+#' @returns A DataFrame with user_id user_id as the first
+#' column, followed by the subscales of the COPE Inventory.
+#' @export
+#' @examples
+#' \code{dat <- scoring_cope(d)}
+#'
 scoring_scs <- function(d) {
-  # d <- rio::import(here("data", "prep", "quest_scales", "scs_items.csv"))
+
+  suppressPackageStartupMessages({
+    library("tidyverse")
+    library("rio")
+  })
 
   if (length(unique(d[, 1])) < 10) {
-    stop("Error: the first column is not user_id!")
+    stop("Error: the first column must be user_id!")
   }
 
+  # Debugging for the groundhog_day project.
+  # d <- rio::import(here("data", "prep", "quest_scales", "scs_items.csv"))
+
   # Self-Kindness
-  d$self_kindness <- d$scs_5 + d$scs_12 + d$scs_19 +d$scs_23 + d$scs_26
+  d$self_kindness <- d$scs_5 + d$scs_12 + d$scs_19 + d$scs_23 + d$scs_26
 
   # Self-Judgment
   d$self_judgment <-
-    abs(d$scs_1 - 6) + abs(d$scs_8 - 6) +
-    abs(d$scs_11 - 6) + abs(d$scs_16 - 6) +
-    abs(d$scs_21 - 6)
+    abs(d$scs_1 - 6) + abs(d$scs_8 - 6) + abs(d$scs_11 - 6) +
+    abs(d$scs_16 - 6) + abs(d$scs_21 - 6)
 
   # Common Humanity
   d$common_humanity <- d$scs_3 + d$scs_7 + d$scs_10 + d$scs_15
 
   # Isolation
   d$isolation <-
-    abs(d$scs_4 - 6) + abs(d$scs_13 - 6) +
-    abs(d$scs_18 - 6) + abs(d$scs_25 - 6)
+    abs(d$scs_4 - 6) + abs(d$scs_13 - 6) + abs(d$scs_18 - 6) +
+    abs(d$scs_25 - 6)
 
   # Mindfulness
   d$mindfulness <- d$scs_9 + d$scs_14 + d$scs_17 + d$scs_22
 
   # Overidentification
   d$over_identification <-
-    abs(d$scs_2 - 6) + abs(d$scs_6 - 6) +
-    abs(d$scs_20 - 6) + abs(d$scs_24 - 6)
+    abs(d$scs_2 - 6) + abs(d$scs_6 - 6) + abs(d$scs_20 - 6) +
+    abs(d$scs_24 - 6)
 
   d$neg_self_compassion <- d$self_judgment + d$isolation +
     d$over_identification
@@ -41,8 +59,8 @@ scoring_scs <- function(d) {
   d$pos_self_compassion <- d$self_kindness + d$common_humanity +
     d$mindfulness
 
-  # The sk, ch, mi, sj, is, oi columns are the *not reversed* scores of the
-  # six SCS subscales.
+  # The sk, ch, mi, sj, is, oi columns are the *not reversed* scores
+  # of the six SCS subscales.
   d$sk <- d$self_kindness
   d$ch <- d$common_humanity
   d$mi <- d$mindfulness
