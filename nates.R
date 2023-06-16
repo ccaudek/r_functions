@@ -9,7 +9,7 @@
 #'   Scale in a numeric format. Each item should be named
 #'   `nates_1`, `nates_2`, ..., `nates_7`.
 #' @returns A DataFrame with user_id user_id as the first
-#' column, followed by the subscales of the NATES Scale.
+#' column, followed by the NATES score.
 #' @export
 #' @examples
 #' \code{dat <- scoring_nates(d)}
@@ -25,7 +25,7 @@ scoring_nates <- function(d) {
       stop("Error: the first column must be user_id!")
     }
 
-  # debugging for the groundhog_day project
+  # Debugging for the groundhog_day project.
   # d <- rio::import(here::here("data", "prep", "quest_scales", "nates_items.csv"))
 
   d$nates_score <- d %>%
