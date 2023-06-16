@@ -1,2 +1,4 @@
 # r_functions
-Generic R functions
+
+R functions for scaling psychometric questionnaires.
+
