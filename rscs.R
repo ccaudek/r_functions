@@ -26,7 +26,7 @@ scoring_rscs <- function(d) {
   }
 
   # Debugging for the groundhog_day project.
-  d <- rio::import(here("data", "prep", "quest_scales", "rscs_items.csv"))
+  # d <- rio::import(here("data", "prep", "quest_scales", "rscs_items.csv"))
 
   # SS
   d$ss <- d$rscs_4 + d$rscs_12 + d$rscs_13 
@@ -50,3 +50,6 @@ scoring_rscs <- function(d) {
 
   return(rscs_scores)
 }
+
+# eof ----
+
