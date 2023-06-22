@@ -1,5 +1,8 @@
-#' \code{scoring_scl90(d)} generates the subscales of the Sympthoms 
-#' Checklist - 90 (scl-90).
+#' \code{scoring_scl90(d)} generates the subscales of the Symptom Check-List-90 
+#' (SCL-90).
+#' 
+#' Derogatis, L.R., Lipman, R.S., & Covi, L. (1973). SCL-90: An outpatient 
+#' psychiatric rating scale-Preliminary Report. Psychopharmacol. Bull. 9, 13-28.
 #' 
 #' ITEM CODING: Each item is scored on a scale from 0 to 4 based on how much an 
 #' individual was bothered by each item in the last week:0 = Not at all, 
@@ -51,7 +54,7 @@ scoring_scl90 <- function(d){
         "scl90_52", "scl90_53", "scl90_56", "scl90_58"
       )
     ) |>
-    rowSums()
+    rowMeans()
 
   # SCL-90: Obsessive-compulsive
   d$scl90_osbsess_comp <- d %>%
@@ -61,7 +64,7 @@ scoring_scl90 <- function(d){
         "scl90_55", "scl90_65"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # SCL-90: Interpersonal sensibility: 6, 21, 34, 36, 37, 41, 61, 69, and 73
   d$scl90_interp_sens <- d %>%
@@ -71,7 +74,7 @@ scoring_scl90 <- function(d){
         "scl90_73"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # SCL-90: Depression: 5, 14, 20, 22, 26, 29, 30, 31, 32, 54, 71, and 79
   d$scl90_depression <- d %>%
@@ -81,7 +84,7 @@ scoring_scl90 <- function(d){
         "scl90_32", "scl90_54", "scl90_71", "scl90_79"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # Anxiety: 2, 17, 23, 33, 39, 57, 72, 78, 80, and 86
   d$scl90_anxiety <- d %>%
@@ -91,7 +94,7 @@ scoring_scl90 <- function(d){
         "scl90_86"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # Anger-hostility: 11, 24, 63, 67, 74, and 81
   d$scl90_anger_hostility <- d %>%
@@ -100,7 +103,7 @@ scoring_scl90 <- function(d){
         "scl90_74", "scl90_81"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # Phobic-anxiety: 13, 25, 47, 50, 70, 75, and 82
   d$scl90_phobic_anxiety <- d %>%
@@ -109,7 +112,7 @@ scoring_scl90 <- function(d){
         "scl90_70", "scl90_75", "scl90_82"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # Paranoid ideation: 8, 18, 43, 68, 76, and 83
   d$scl90_paranoid_ideation <- d %>%
@@ -118,7 +121,7 @@ scoring_scl90 <- function(d){
         "scl90_76", "scl90_83"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # Psychoticism: 7, 16, 35, 62, 77, 84, 85, 87, 88, and 90
   d$scl90_psychoticism <- d %>%
@@ -128,7 +131,7 @@ scoring_scl90 <- function(d){
         "scl90_88", "scl90_90"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   # Sleep disorder
   d$scl90_sleep_disorder <- d %>%
@@ -136,11 +139,11 @@ scoring_scl90 <- function(d){
       c("scl90_44", "scl90_64", "scl90_66"
       )
     ) |>
-    rowSums()
+    rowMeans()
   
   d$scl90_ts <- d %>%
     dplyr::select(-user_id) |>
-    rowSums() / 90
+    rowMeans() 
   
   scl90_scales <- d[, c(1, 92:102)]
   

@@ -25,7 +25,7 @@ scoring_neoffi60_neuro <- function(d) {
   }
 
   # Debugging for the groundhog_day project.
-  d <- rio::import(here("data", "prep", "quest_scales", "neuroticism_items.csv"))
+  # d <- rio::import(here("data", "prep", "quest_scales", "neoffi60_neuro_items.csv"))
 
   d$neuroticism <-
     (5 - d$neuroticism_1) +
