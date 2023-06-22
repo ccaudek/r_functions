@@ -9,7 +9,7 @@
 #'   in a numeric format. Each item should be named
 #'   `rscs_1`, `rscs_2`, ..., `rscs_16`.
 #' @returns A DataFrame with user_id user_id as the first
-#' column, followed by the subscales of the COPE Inventory.
+#' column, followed by the subscales of the RSCS Scale.
 #' @export
 #' @examples
 #' \code{dat <- scoring_rscs(d)}
